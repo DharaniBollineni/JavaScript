@@ -6,6 +6,38 @@
 <body>
 
 <script>
+function geoFindMe() {
+
+const status = document.querySelector('#status');
+const mapLink = document.querySelector('#map-link');
+
+mapLink.href = '';
+mapLink.textContent = '';
+
+function success(position) {
+  const latitude  = position.coords.latitude;
+  const longitude = position.coords.longitude;
+
+  status.textContent = '';
+  mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+  mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+}
+
+function error() {
+  status.textContent = 'Unable to retrieve your location';
+}
+
+if(!navigator.geolocation) {
+  status.textContent = 'Geolocation is not supported by your browser';
+} else {
+  status.textContent = 'Locating…';
+  navigator.geolocation.getCurrentPosition(success, error);
+}
+
+}
+
+
+
     // connect to Geolocation api
     // The Geolocation interface neither implements, nor inherits any property.
     // The Geolocation API is available through the navigator.geolocation object.
@@ -13,22 +45,30 @@
     if('geolocation' in navigator) {  // if available get the location details of the client 
         console.log("geolocation is available");
         navigator.geolocation.getCurrentPosition((position) => {
-            const lat=position.coords.latitude;
-            const lon=position.coords.longitude;
-            document.getElementById('latitude').textContent=lat;
-            document.getElementById('longitude').textContent=lon;
-            console.log(position);
+            //level1::*************display details on the html page using <p> tage**************
+
+            // const lat=position.coords.latitude;
+            // const lon=position.coords.longitude;
+            // document.getElementById('latitude').textContent=lat;
+            // document.getElementById('longitude').textContent=lon;
+            // console.log(position);
         //  doSomething(position.coords.latitude, position.coords.longitude);
+        //level2:
+        document.querySelector('#find-me').addEventListener('click', geoFindMe);
         });
 } else {
     console.log("geolocation IS NOT available");
 }
 </script>
-
-<h1>Data Selfie App</h1>
+<!-- level1::*************display details on the html page using <p> tage************** -->
+<!-- <h1>Data Selfie App</h1>
 <p>Hello!</p>
 <p>latitude: <spam id="latitude"></spam>&deg</br>
     longitude: <spam id="longitude"></spam>&deg
-</p>
+</p> -->
+<!-- level2 :: *************display details on the html page using button************** -->
+<button id = "find-me">Show my location</button><br/>
+<p id = "status"></p>
+<a id = "map-link" target="_blank"></a>
 </body>
 </html>

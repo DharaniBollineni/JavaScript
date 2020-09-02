@@ -18,7 +18,7 @@ function success(position) {
   const latitude  = position.coords.latitude;
   const longitude = position.coords.longitude;
 
-  status.textContent = '';
+  status.textContent = 'Hello';
   mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
   mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
 }
@@ -31,7 +31,7 @@ if(!navigator.geolocation) {
   status.textContent = 'Geolocation is not supported by your browser';
 } else {
   status.textContent = 'Locating…';
-  navigator.geolocation.getCurrentPosition(success, error);
+  navigator.geolocation.getCurrentPosition(success, error); //callback method if success or error
 }
 
 }
@@ -44,7 +44,7 @@ if(!navigator.geolocation) {
     // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API/Using_the_Geolocation_API
     if('geolocation' in navigator) {  // if available get the location details of the client 
         console.log("geolocation is available");
-        navigator.geolocation.getCurrentPosition((position) => {
+        navigator.geolocation.getCurrentPosition(async (position) => {
             //level1::*************display details on the html page using <p> tage**************
 
             // const lat=position.coords.latitude;
@@ -54,7 +54,31 @@ if(!navigator.geolocation) {
             // console.log(position);
         //  doSomething(position.coords.latitude, position.coords.longitude);
         //level2:
+        console.log("geolocation is available");
         document.querySelector('#find-me').addEventListener('click', geoFindMe);
+        const latt=position.coords.latitude;
+        const long=position.coords.longitude;
+        const data={latt,long};  // created object to send data
+        // http://expressjs.com/en/guide/routing.html
+        //https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+        // header is some thing that is used for communication between the client and server using post request
+       // header have name : value
+       // over all it is sent the data is JSON formate post it to API (end point)
+        const options={
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'  // tell that data is sent as JSON data
+                      },
+            body: JSON.stringify(data)
+
+        };
+        // body of post request where i packaging of all my data using JSON signify which is sent as text / string
+        const response = await fetch('/api',options);//.then(response=>{
+            // console.log(response);
+            const jsonData = await response.json();
+            console.log(jsonData);
+
+        // }); // connect to api and send method using POST
         });
 } else {
     console.log("geolocation IS NOT available");

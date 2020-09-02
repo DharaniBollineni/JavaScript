@@ -17,7 +17,9 @@ Secure context of Geolocation API :
 ---------------------------------
 This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.
 
-
+4: Server host static html file on the client--> client located the geolocation sends that to the server using POST and fetch method 
+    --> server receives it and send the response back to the client (for a complete handshake and data is exchanged)
+5: 
 
 
 

@@ -6,6 +6,7 @@
 <body>
 
 <script>
+var a=[]
 function geoFindMe() {
 
 const status = document.querySelector('#status');
@@ -20,9 +21,16 @@ function success(position) {
 
   status.textContent = 'Hello';
   let d = new Date();
- let timestamp = d.getTime();
+  let timestamp = d.getTime();
   mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
   mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °,timestamp:${timestamp}`;
+
+  // add details to an array as object and display on console
+    
+    var b={"latitude":latitude, "longitude":longitude ,"timestamp":timestamp};
+    // a = [...a, {"latitude":latitude, "longitude":longitude ,"timestamp":timestamp}] 
+    a.push(b);  
+    console.log(a);
 }
 
 function error() {
@@ -35,6 +43,8 @@ if(!navigator.geolocation) {
   status.textContent = 'Locating…';
   navigator.geolocation.getCurrentPosition(success, error); //callback method if success or error
 }
+
+
 
 }
 

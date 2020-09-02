@@ -26,6 +26,7 @@ app.use(express.static('public'));
   // send the response 
   response.json({ status: 'success', 
                   latitude: data.latt, 
-                  longitude: data.long    
+                  longitude: data.long,
+                  timeCheck: data.timestamp
                 }); 
  });

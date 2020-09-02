@@ -19,8 +19,10 @@ function success(position) {
   const longitude = position.coords.longitude;
 
   status.textContent = 'Hello';
+  let d = new Date();
+ let timestamp = d.getTime();
   mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-  mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+  mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °,timestamp:${timestamp}`;
 }
 
 function error() {
@@ -58,7 +60,10 @@ if(!navigator.geolocation) {
         document.querySelector('#find-me').addEventListener('click', geoFindMe);
         const latt=position.coords.latitude;
         const long=position.coords.longitude;
-        const data={latt,long};  // created object to send data
+        let d = new Date();
+        let timestamp = d.getTime();
+        console.log(timestamp);
+        const data={latt,long,timestamp};  // created object to send data
         // http://expressjs.com/en/guide/routing.html
         //https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
         // header is some thing that is used for communication between the client and server using post request
